@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MY AI</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="sidenav">
+      <span style="color: azure;"><h4>About</h4>Testing Mode of Artificial Intelligence Application. this software will wow you when you will check this. 
+      it may ease your some tasks that you want to do without wasting much time.
+      Its a AI Human Brain its think like in a form as a human think.</span><br /><br />
+      <span style="color: darkcyan;">
+      Model : Text,<br/>
+      Temperature : 0,<br />
+      MAX_Tokens : 3000,<br />
+      frequency_penalty: 0.5,<br /><br />
+      </span>
+      <span style="color: aqua;">MetaAffinity</span>
+    </div>
+    <div id="app">
+      <div id="chat_container"></div>
+
+      <form>
+        <textarea id="note-textarea" name="prompt" rows="1" cols="1" placeholder="Ask to MetaAffinity ..."></textarea>
+        <button type="submit"><img src="assets/send.svg" alt="send" />
+
+          <button id="start-record-btn" title="Start Recording">Start Recognition</button>
+          <button id="pause-record-btn" title="Pause Recording">Pause Recognition</button>
+          <button id="save-note-btn" title="Save Note">Save Note</button>   
+          <p id="recording-instructions">Press the <strong>Start Recognition</strong> button and allow access.</p>
+
+      </form>
+    </div>
+
+    <script type="module" src="script.js"></script>
+
+
+<!-- Voice Recognition -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="voicescript.js"></script>
+<!-- -->
+  </body>
+</html>
