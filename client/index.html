@@ -28,13 +28,16 @@
         <textarea id="note-textarea" name="prompt" rows="1" cols="1" placeholder="Ask to MetaAffinity ..."></textarea>
         <button type="submit"><img src="assets/send.svg" alt="send" />
           <div class="">
+            <span style="display: block;">
             <script>
             if (navigator.userAgent.indexOf("Firefox") > -1) {
               // show some content
               document.write("You are using Firefox!");
+            } else {
+              document.write(" ");
             }
             </script>
-            Sorry, this feature is not available in firefox.Please try using a different browser.
+            Sorry, this feature is not available in firefox.Please try using a different browser.</span>
           <button id="start-record-btn" title="Start Recording">Start Recognition</button>
           <button id="pause-record-btn" title="Pause Recording">Pause Recognition</button>
           <button id="save-note-btn" title="Save Note">Save Note</button>   
