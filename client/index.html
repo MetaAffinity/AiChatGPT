@@ -25,27 +25,33 @@
       <div id="chat_container"></div>
 
       <form>
-        <div style="">
         <textarea id="note-textarea" name="prompt" rows="1" cols="1" placeholder="Ask to MetaAffinity ..."></textarea>
         <button type="submit"><img src="assets/send.svg" alt="send" />
-        </div>
-          <div class="">
-            <h4 style="">
-            <script>
-            if (navigator.userAgent.indexOf("Firefox") > -1) {
-              // show some content
-              document.write("Sorry, voice feature is not available in firefox.Please try using a different browser");
-            } else {
-              document.write(" ");
-            }
-            </script>
-            </h4>
+        
+          
+
           <button id="start-record-btn" title="Start Recording">Start Recognition</button>
           <button id="pause-record-btn" title="Pause Recording">Pause Recognition</button>
           <button id="save-note-btn" title="Save Note">Save Note</button>   
           <p id="recording-instructions">Press the <strong>Start Recognition</strong> button and allow access.</p>
-          </div>
+          
       </form>
+
+      <div style="display: block;">
+        <h4 style="">
+        <script>
+        if (navigator.userAgent.indexOf("Firefox") > -1) {
+          // show some content
+          document.write("Sorry, voice feature is not available in firefox.Please try using a different browser");
+        } else {
+          document.write(" ");
+        }
+        </script>
+        </h4>
+        </div>
+
+
+
     </div><!-- app --> 
     </div><!-- main -->
 
