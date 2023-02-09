@@ -172,3 +172,15 @@ form img {
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
 }
+
+a {
+ text-decoration: underline;
+ color: white; 
+ font-size: 18px;
+}
+a:active{
+  color:white
+}
+a:hover{
+  color:#10a37f
+}
