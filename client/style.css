@@ -171,8 +171,8 @@ form img {
 @media screen and (max-width: 450px){
   .sidenav{display: none;}
 }
-@media screen and (min-width: 450px){
-  .main{width: 100%; 
+@media screen and (max-width: 450px){
+  .main{ 
     margin-left: 0px;
     padding:5px;}
 }
