@@ -167,9 +167,13 @@ form img {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+/*for mobile*/
 @media screen and (max-width: 450px){
   .sidenav{display: none;}
-  
+  .main{width: 100%;}
+}
+@media screen and (max-width: 450px){
+  .mob{display: none;}
 }
 .main {
   margin-left: 160px; /* Same as the width of the sidenav */
