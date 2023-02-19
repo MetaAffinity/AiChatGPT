@@ -168,14 +168,14 @@ form img {
   .sidenav a {font-size: 18px;}
 }
 /*for mobile*/
-@media screen and (max-width: 450px){
+@media screen and (min-width: 450px){
   .sidenav{display: none;}
   .main{width: 100%; 
     margin-left: 160px;
     padding:5px;}
 }
 
-@media screen and (min-width: 450px){
+@media screen and (max-width: 450px){
   .mob{display: none;}
 }
 .main {
