@@ -167,7 +167,7 @@ form img {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
-@media screen and (min-width: 450px){
+@media screen and (max-width: 450px){
   .sidenav{display: none;}
   
 }
