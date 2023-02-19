@@ -163,11 +163,14 @@ form img {
   overflow-x: hidden;
   padding-top: 20px;
 }
-@media screen and (min-height: 450px) {
-  .sidenav {padding-top: 15px; display: none;}
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
-
+@media screen and (min-width: 450px){
+  .sidenav{display: none;}
+  
+}
 .main {
   margin-left: 160px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
