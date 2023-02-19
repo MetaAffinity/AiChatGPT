@@ -167,6 +167,10 @@ form img {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px; display: none;}
+  .sidenav a {font-size: 18px;}
+}
 .main {
   margin-left: 160px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
