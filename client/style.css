@@ -176,9 +176,9 @@ form img {
     margin-left: 160px;
     padding:5px;}
 }
-.mob{display: block;}
-@media screen and (max-width: 450px){
-  .mob{display: none;}
+.mob{display: none;}
+@media screen and (min-width: 450px){
+  .mob{display: block;}
 }
 .main {
   margin-left--: 160px; /* old 160px Same as the width of the sidenav */
