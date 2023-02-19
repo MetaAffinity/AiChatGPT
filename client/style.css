@@ -170,10 +170,12 @@ form img {
 /*for mobile*/
 @media screen and (max-width: 450px){
   .sidenav{display: none;}
-  .main{width: 100%; margin-left: 0; padding:5px;}
+  .main{width: 100%; 
+    margin-left: 0px;
+    padding:5px;}
 }
 .mob{}
-@media screen and (max-width: 450px){
+@media screen and (min-width: 450px){
   .mob{display: none;}
 }
 .main {
