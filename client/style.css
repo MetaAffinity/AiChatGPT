@@ -177,7 +177,7 @@ form img {
     padding:5px;}
 }
 
-@media screen and (max-width: 449px){
+@media screen and (min-width: 449px){
   .mob{display: none;}
 }
 .main {
