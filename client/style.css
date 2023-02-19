@@ -163,7 +163,7 @@ form img {
   overflow-x: hidden;
   padding-top: 20px;
 }
-@media screen and (max-height: 450px) {
+@media screen and (min-height: 450px) {
   .sidenav {padding-top: 15px; display: none;}
   .sidenav a {font-size: 18px;}
 }
