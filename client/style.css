@@ -174,8 +174,8 @@ form img {
     margin-left: 0px;
     padding:5px;}
 }
-.mob{}
-@media screen and (min-width: 450px){
+
+@media screen and (max-width: 450px){
   .mob{display: none;}
 }
 .main {
