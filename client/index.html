@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MY AI</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <div class="sidenav">
@@ -23,40 +24,30 @@
       <div><span style="text-align: center;"><a target="_blank" href="https://metaaffinity.net/">MetaAffinity</a></span></div>
     </div>
     <div class="main">
-    <div id="app"> <!-- apstart-->
-      
-      <nav role="navigation">
-        <div id="menuToggle">
-          <!--
-          A fake / hidden checkbox is used as click reciever,
-          so you can use the :checked selector on it.
-          -->
-          <input type="checkbox" />
-          
-          <!--
-          Some spans to act as a hamburger.
-          
-          They are acting like a real hamburger,
-          not that McDonalds stuff.
-          -->
-          <span></span>
-          <span></span>
-          <span></span>
-          
-          <!--
-          Too bad the menu has to be inside of the button
-          but hey, it's pure CSS magic.
-          -->
-          <ul id="menu">
-            <a href="#"><li>Home</li></a>
-            <a href="#"><li>About</li></a>
-            <a href="#"><li>Info</li></a>
-            <a href="#"><li>Contact</li></a>
-            <a href="https://erikterwan.com/" target="_blank"><li>Show me more</li></a>
-          </ul>
-        </div>
-      </nav>
 
+
+      <!-- Simulate a smartphone / tablet look -->
+<div class="mobile-container">
+
+  <!-- Top Navigation Menu -->
+  <div class="topnav">
+    <a href="#home" class="active">Logo</a>
+    <div id="myLinks">
+      <a href="#news">News</a>
+      <a href="#contact">Contact</a>
+      <a href="#about">About</a>
+    </div>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+  
+  <!-- End smartphone / tablet look -->
+  </div>
+
+
+
+    <div id="app"> <!-- apstart-->
       <div id="chat_container"></div>
 
       <form>
@@ -81,6 +72,16 @@
           document.write(" ");
         }
         </script>
+        <script>
+          function myFunction() {
+            var x = document.getElementById("myLinks");
+            if (x.style.display === "block") {
+              x.style.display = "none";
+            } else {
+              x.style.display = "block";
+            }
+          }
+          </script>
         </span>
         </div>
 
