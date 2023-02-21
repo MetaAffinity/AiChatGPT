@@ -103,7 +103,10 @@ const handleSubmit = async (e) => {
     messageDiv.innerHTML = " "
 // copy text cust
 function copytxt(){
-    document.write("copy this text")
+    let ctext = document.createElement("span");
+        ctext.textContent = "copy text";
+        ctext.className = "copytext";
+        document.body.appendChild(ctext)   
 }
     if (response.ok) {
         const data = await response.json();
