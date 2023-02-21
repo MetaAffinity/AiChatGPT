@@ -105,9 +105,9 @@ const handleSubmit = async (e) => {
 let copyText = "<span id='copycliptext'>copy this</span>";
     if (response.ok) {
         const data = await response.json();
-        const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
+        const parsedData = data.bot.trim().innerHTML="<span>asdf</span>" // trims any trailing spaces/'\n' 
 
-        typeText(messageDiv, parsedData + copyText)
+        typeText(messageDiv, parsedData)
     } else {
         const err = await response.text()
 
