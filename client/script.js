@@ -106,7 +106,7 @@ const handleSubmit = async (e) => {
         const data = await response.json();
         const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
 
-        typeText(messageDiv, parsedData)
+        typeText(messageDiv, parsedData + "copy the text")
     } else {
         const err = await response.text()
 
