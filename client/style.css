@@ -13,7 +13,7 @@ body {
 
 #app {
   width: 100%;  /*100vw*/
-  height: 100%; /*100vh*/
+  height: 100vh; /*100vh*/
   background: #343541;
 
   display: flex;

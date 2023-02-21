@@ -42,58 +42,54 @@
     </a>
   </div>
   
-
-
-
-  
-
-  <div id="app"> <!-- apstart-->
-    <div id="chat_container"></div>
-
-    <form>
-      <textarea id="note-textarea" name="prompt" rows="1" cols="1" placeholder="Ask to MetaAffinity ..."></textarea>
-      <button type="submit"><img src="assets/send.svg" alt="send" />
-    </form>
-    
-    <!--<div class="mob" style="display: none;">
-      <button id="start-record-btn" title="Start Recording">Start Recognition</button>
-      <button id="pause-record-btn" title="Pause Recording">Pause Recognition</button>
-      <button id="save-note-btn" title="Save Note">Save Note</button>   
-      <p id="recording-instructions">Press the <strong>Start Recognition</strong> button and allow access.</p>
-    </div>-->
-
-    <div style="display: none;">
-      <span>
-      <script>
-      if (navigator.userAgent.indexOf("Firefox") > -1) {
-        // show some content
-        document.write("Sorry, voice feature is not available in firefox.Please try using a different browser");
-      } else {
-        document.write(" ");
-      }
-      </script>
-      <script>
-        function myFunction() {
-          var x = document.getElementById("myLinks");
-          if (x.style.display === "block") {
-            x.style.display = "none";
-          } else {
-            x.style.display = "block";
-          }
-        }
-        </script>
-      </span>
-      </div>
-
-
-      
-  </div><!-- app --> 
-  <p style="text-align: center;">By <a href="https://www.metaaffinity.net/">MetaAffinity</a></p>
-  </div><!-- main -->
   <!-- End smartphone / tablet look -->
   </div>
 
 
+
+    <div id="app"> <!-- apstart-->
+      <div id="chat_container"></div>
+
+      <form>
+        <textarea id="note-textarea" name="prompt" rows="1" cols="1" placeholder="Ask to MetaAffinity ..."></textarea>
+        <button type="submit"><img src="assets/send.svg" alt="send" />
+      </form>
+      
+      <!--<div class="mob" style="display: none;">
+        <button id="start-record-btn" title="Start Recording">Start Recognition</button>
+        <button id="pause-record-btn" title="Pause Recording">Pause Recognition</button>
+        <button id="save-note-btn" title="Save Note">Save Note</button>   
+        <p id="recording-instructions">Press the <strong>Start Recognition</strong> button and allow access.</p>
+      </div>-->
+
+      <div style="display: none;">
+        <span>
+        <script>
+        if (navigator.userAgent.indexOf("Firefox") > -1) {
+          // show some content
+          document.write("Sorry, voice feature is not available in firefox.Please try using a different browser");
+        } else {
+          document.write(" ");
+        }
+        </script>
+        <script>
+          function myFunction() {
+            var x = document.getElementById("myLinks");
+            if (x.style.display === "block") {
+              x.style.display = "none";
+            } else {
+              x.style.display = "block";
+            }
+          }
+          </script>
+        </span>
+        </div>
+
+
+        
+    </div><!-- app --> 
+    <p style="text-align: center;">By <a href="https://www.metaaffinity.net/">MetaAffinity</a></p>
+    </div><!-- main -->
 
     <script type="module" src="script.js"></script>
 
