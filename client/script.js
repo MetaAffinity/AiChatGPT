@@ -102,17 +102,12 @@ const handleSubmit = async (e) => {
     clearInterval(loadInterval)
     messageDiv.innerHTML = " "
 // copy text cust
-//function copytxt(){
-    let ctext = document.createElement("span");
-        ctext.textContent = "copy text";
-        ctext.className = "copytext";
-           
-//}
+let copyText = "<span id='copycliptext'>copy this</span>";
     if (response.ok) {
         const data = await response.json();
         const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
 
-        typeText(messageDiv, parsedData + document.body.appendChild(ctext))
+        typeText(messageDiv, parsedData + copyText)
     } else {
         const err = await response.text()
 
