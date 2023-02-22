@@ -106,7 +106,7 @@ const handleSubmit = async (e) => {
         const data = await response.json();
         const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
 
-        typeText(messageDiv, parsedData)
+        typeText(messageDiv+"msg here", parsedData+"parsemsg")
     } else {
         const err = await response.text()
 
@@ -114,13 +114,7 @@ const handleSubmit = async (e) => {
         alert(err)
     }
         // add event listener for copying bot message on click
-        if (messageDiv.classList.contains('ai')) {
-            messageDiv.addEventListener('click', () => {
-                const textToCopy = messageDiv.textContent.trim()
-                navigator.clipboard.writeText(textToCopy)
-                alert(`Copied: ${textToCopy}`) 
-            })
-            }
+
 }
 
 form.addEventListener('submit', handleSubmit)
