@@ -55,7 +55,8 @@ function chatStripe(isAi, value, uniqueId) {
     const profileImgSrc = isAi ? bot : user;
     const profileImgAlt = isAi ? 'bot' : 'user';
     const messageText = isAi ? '' : value; // only show message text for user stripe
-    const editable = isAi ? false : true;
+    //const editable = isAi ? false : true;
+    const editable = isAi ? '' : value;
     // end added
     return (
         `
@@ -159,7 +160,7 @@ form.addEventListener('keyup', (e) => {
     }
 })
 
-
+////////////////////////////////////////////
 
 
 chatContainer.addEventListener('click', (e) => {
