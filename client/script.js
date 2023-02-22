@@ -86,6 +86,7 @@ const handleSubmit = async (e) => {
     // user's chatstripe
     chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
 
+
     // to clear the textarea input 
     form.reset()
 
@@ -102,46 +103,52 @@ const handleSubmit = async (e) => {
     // messageDiv.innerHTML = "..."
     loader(messageDiv)
 
-    // check if user input contains a specific keyword or phrase
-    const prompt = data.get('prompt').toLowerCase()
-    let responseText = ''
-    if (prompt.includes('hello') || prompt.includes('hi')) {
-        responseText = 'Hi there! How can I help you today?'
-    } else if (prompt.includes('how are you')) {
-        responseText = 'I am just a computer program, so I cannot feel emotions, but thank you for asking!'
-    }else if(prompt.includes('who created you')){
-        responseText = 'imran created me!'
-    } 
-    else {
-        // if no specific keyword or phrase is detected, send the prompt to the server
-        responseText = await sendToServer(prompt)
-    }
 
-    clearInterval(loadInterval)
-    messageDiv.innerHTML = " "
 
-    typeText(messageDiv, responseText)
-}
-
-async function sendToServer(prompt) {
+    //const response = await fetch('http://localhost:5000/', {
     const response = await fetch('https://metaaffinityaichat.onrender.com', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            prompt
+            prompt: data.get('prompt')
         })
     })
 
+    clearInterval(loadInterval)
+    messageDiv.innerHTML = " "
+
     if (response.ok) {
         const data = await response.json();
-        const parsedData = data.bot.trim() // trims any trailing spaces/'\n'
-        return parsedData
+        const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
+
+        typeText(messageDiv, parsedData)
+
+
+        // create copy button after typing text effect is finished
+       /*
+        setTimeout(() => {
+        messageDiv.innerHTML += '<button class="copy-button">Copy</button>'
+        const copyButton = messageDiv.querySelector('.copy-button')
+        copyButton.addEventListener('click', () => {
+            const textToCopy = messageDiv.textContent
+            navigator.clipboard.writeText(textToCopy)
+            copyButton.textContent = 'Copied'
+            setTimeout(() => {
+                copyButton.textContent = 'Copy'
+            }, 2000)
+        })
+        }, 500 + (20 * parsedData.length))
+        */
+
+
+
     } else {
         const err = await response.text()
+
+        messageDiv.innerHTML = "Something went wrong"
         alert(err)
-        return 'Something went wrong'
     }
 }
 
