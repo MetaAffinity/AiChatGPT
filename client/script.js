@@ -45,22 +45,21 @@ function generateUniqueId() {
 }
 
 function chatStripe(isAi, value, uniqueId) {
-    return (
-        `
-        <div class="wrapper ${isAi && 'ai'}">
-            <div class="chat">
-                <div class="profile">
-                    <img 
-                      src=${isAi ? bot : user} 
-                      alt="${isAi ? 'bot' : 'user'}" 
-                    />
-                </div>
-                <div class="message" id=${uniqueId}>${value}</div>
-            </div>
+    const message = `
+      <div class="message" id=${uniqueId}>${value}</div>
+      <button class="copy-btn">Copy</button>
+    `;
+    return `
+      <div class="wrapper ${isAi && 'ai'}">
+        <div class="chat">
+          <div class="profile">
+            <img src=${isAi ? bot : user} alt="${isAi ? 'bot' : 'user'}" />
+          </div>
+          ${message}
         </div>
-    `
-    )
-}
+      </div>
+    `;
+  }
 
 const handleSubmit = async (e) => {
     e.preventDefault()
@@ -70,6 +69,19 @@ const handleSubmit = async (e) => {
     // user's chatstripe
     chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
 
+    chatContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('copy-btn')) {
+          const messageDiv = e.target.previousSibling;
+          const messageText = messageDiv.textContent.trim();
+      
+          navigator.clipboard.writeText(messageText).then(() => {
+            e.target.textContent = 'Copied';
+            e.target.disabled = true;
+          });
+        }
+      });
+      
+    
     // to clear the textarea input 
     form.reset()
 
