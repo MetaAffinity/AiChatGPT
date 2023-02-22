@@ -78,8 +78,7 @@ const handleSubmit = async (e) => {
     const data = new FormData(form)
 
     // user's chatstripe
-    //chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
-    chatContainer.innerHTML += chatStripe(false, data.get('prompt'), false);
+    chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
 
 
     // to clear the textarea input 
