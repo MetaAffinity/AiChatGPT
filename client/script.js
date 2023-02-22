@@ -109,7 +109,10 @@ const handleSubmit = async (e) => {
         responseText = 'Hi there! How can I help you today?'
     } else if (prompt.includes('how are you')) {
         responseText = 'I am just a computer program, so I cannot feel emotions, but thank you for asking!'
-    } else {
+    }else if(prompt.includes('who created you')){
+        responseText = 'imran created me!'
+    } 
+    else {
         // if no specific keyword or phrase is detected, send the prompt to the server
         responseText = await sendToServer(prompt)
     }
