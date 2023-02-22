@@ -55,9 +55,6 @@ function chatStripe(isAi, value, uniqueId) {
     const profileImgSrc = isAi ? bot : user;
     const profileImgAlt = isAi ? 'bot' : 'user';
     const messageText = isAi ? '' : value; // only show message text for user stripe
-    const contentEditable = isAi ? false : true; // make response message text editable
-    const editButton = isAi ? '' : `<button class="edit-btn">Edit</button>`; // add edit button for response message stripe
-    const messageHtml = isAi ? value : `<div class="message-text" contenteditable="${contentEditable}">${value}</div>`; // wrap response message text inside contenteditable div
     // end added
     return (
         `
@@ -69,10 +66,7 @@ function chatStripe(isAi, value, uniqueId) {
                     alt="${profileImgAlt}" 
                     />
                 </div>
-                <div class="message" id=${uniqueId}>
-                    ${messageHtml}
-                    ${editButton}
-                </div>
+                <div class="message" id=${uniqueId} contentEditable=${isAi}>${messageText}</div>
                 ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
             </div>
             ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
@@ -165,38 +159,6 @@ form.addEventListener('keyup', (e) => {
 })
 
 ////////////////////////////////////////////
-
-// Event listener for the "Edit" button click
-chatContainer.addEventListener('click', (e) => {
-    const editBtn = e.target.closest('.edit-btn');
-    if (editBtn) {
-        const messageText = editBtn.previousElementSibling;
-        messageText.contentEditable = 'true';
-        messageText.focus();
-        editBtn.textContent = 'Save';
-        editBtn.classList.add('save-btn');
-    }
-});
-
-// Event listener for the "Save" button click (which replaces the "Edit" button)
-chatContainer.addEventListener('click', (e) => {
-    const saveBtn = e.target.closest('.save-btn');
-    if (saveBtn) {
-        const messageText = saveBtn.previousElementSibling;
-        messageText.contentEditable = 'false';
-        saveBtn.textContent = 'Edit';
-        saveBtn.classList.remove('save-btn');
-    }
-});
-
-// Event listener for the contenteditable message text's blur event (which triggers the "Save" button click)
-chatContainer.addEventListener('blur', (e) => {
-    const messageText = e.target.closest('.message-text');
-    if (messageText) {
-        const saveBtn = messageText.nextElementSibling;
-        saveBtn.click();
-    }
-});
 
   
 
