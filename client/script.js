@@ -56,7 +56,7 @@ function chatStripe(isAi, value, uniqueId) {
                     />
                 </div>
                 <div class="message" id=${uniqueId}>${value}</div>
-                <button class="copy-button" data-message="${value}">Copy</button>
+                ${isAi ? `<button class="copy-btn" onclick="copyResponse('${uniqueId}')">Copy</button>` : ''}
             </div>
         </div>
     `
@@ -80,15 +80,6 @@ const handleSubmit = async (e) => {
 
     // to focus scroll to the bottom 
     chatContainer.scrollTop = chatContainer.scrollHeight;
-
-
-    // get the text of the associated message form the  data-message attribute
-    chatContainer.addEventListener('click', (e) => {
-        if (e.target.classList.contains('copy-button')) {
-          const message = e.target.getAttribute('data-message')
-          copyToClipboard(message)
-        }
-      })
 
 
     // specific message div 
@@ -134,16 +125,21 @@ form.addEventListener('keyup', (e) => {
     }
 })
 
+//copyRecponse
+function copyResponse(uniqueId) {
+    const responseDiv = document.getElementById(uniqueId)
+    const responseText = responseDiv.innerText
 
-
-
-// copytoclipboard function
-function copyToClipboard(text) {
-    const tempInput = document.createElement('input')
-    tempInput.value = text
-    document.body.appendChild(tempInput)
-    tempInput.select()
+    const textarea = document.createElement('textarea')
+    textarea.value = responseText
+    document.body.appendChild(textarea)
+    textarea.select()
     document.execCommand('copy')
-    document.body.removeChild(tempInput)
-  }
-  
+    document.body.removeChild(textarea)
+
+    const copyBtn = responseDiv.parentNode.querySelector('.copy-btn')
+    copyBtn.innerHTML = 'Copied!'
+    setTimeout(() => {
+        copyBtn.innerHTML = 'Copy'
+    }, 1500)
+}
