@@ -44,7 +44,7 @@ function generateUniqueId() {
     return `id-${timestamp}-${hexadecimalString}`;
 }
 
-function chatStripe(isAi, value, hasCopyButton, uniqueId) {
+function chatStripe(isAi, value, uniqueId) {
     // new added
     const copyButtonHtml = hasCopyButton
     ? `
