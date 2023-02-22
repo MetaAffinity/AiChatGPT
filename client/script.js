@@ -112,6 +112,7 @@ const handleSubmit = async (e) => {
 
 
         // create copy button after typing text effect is finished
+       /*
         setTimeout(() => {
         messageDiv.innerHTML += '<button class="copy-button">Copy</button>'
         const copyButton = messageDiv.querySelector('.copy-button')
@@ -123,8 +124,8 @@ const handleSubmit = async (e) => {
                 copyButton.textContent = 'Copy'
             }, 2000)
         })
-    }, 500 + (20 * parsedData.length))
-
+        }, 500 + (20 * parsedData.length))
+        */
 
 
 
@@ -143,7 +144,7 @@ form.addEventListener('keyup', (e) => {
     }
 })
 
-/* COpy response text with buttons
+/* COpy response text with buttons*/
 const copyTextToClipboard = (text) => {
     const textArea = document.createElement('textarea');
     textArea.value = text;
@@ -169,7 +170,7 @@ chatContainer.addEventListener('click', (e) => {
         
     }
 });
-*/
+
 
 // copy the response message..
 /*
