@@ -45,22 +45,24 @@ function generateUniqueId() {
 }
 
 function chatStripe(isAi, value, uniqueId) {
-
+    // new added
+    const profileImgSrc = isAi ? bot : user;
+    const profileImgAlt = isAi ? 'bot' : 'user';
+    const messageText = isAi ? '' : value; // only show message text for user stripe
+// end added
     return (
         `
         <div class="wrapper ${isAi && 'ai'}">
             <div class="chat">
                 <div class="profile">
                     <img 
-                      src=${isAi ? bot : user} 
-                      alt="${isAi ? 'bot' : 'user'}" 
+                    src=${profileImgSrc} 
+                    alt="${profileImgAlt}" 
                     />
                 </div>
                 <div class="message" id=${uniqueId}>${value}</div>
-                ${isAi && '<button class="copy-btn">Copy</button>'}
-                
             </div>
-            
+            ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
         </div>
     `
     )
