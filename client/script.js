@@ -44,12 +44,14 @@ function generateUniqueId() {
     return `id-${timestamp}-${hexadecimalString}`;
 }
 
+
+
 function chatStripe(isAi, value, uniqueId) {
-    // new added
     const profileImgSrc = isAi ? bot : user;
     const profileImgAlt = isAi ? 'bot' : 'user';
-    const messageText = isAi ? '' : value; // only show message text for user stripe
-    // end added
+    const messageText = isAi ? '' : value;
+    const messageElem = isAi ? `<div class="message" id=${uniqueId}></div>` : `<div class="message" id=${uniqueId}>${value}</div>`;
+    const editButton = isAi ? '' : `<button class="edit-btn" onclick="editMessage('${uniqueId}')">Edit</button>`;
     return (
         `
         <div class="wrapper ${isAi && 'ai'}">
@@ -60,38 +62,12 @@ function chatStripe(isAi, value, uniqueId) {
                     alt="${profileImgAlt}" 
                     />
                 </div>
-                <div class="message" id=${uniqueId}>${value}</div>
-                ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
+                ${messageElem}
+                ${editButton}
             </div>
-            ${isAi ? '<button class="edit-btn">Edit</button>' : ''}
         </div>
     `
     )
-}
-
-function editResponse(uniqueId, message) {
-    const messageDiv = document.getElementById(uniqueId);
-    const originalText = messageDiv.innerHTML;
-    const textArea = document.createElement('textarea');
-    textArea.value = message;
-    textArea.classList.add('edit-message');
-    messageDiv.innerHTML = '';
-    messageDiv.appendChild(textArea);
-
-    textArea.addEventListener('keydown', (e) => {
-        if (e.keyCode === 13) {
-            e.preventDefault();
-            textArea.disabled = true;
-            messageDiv.innerHTML = textArea.value;
-        }
-    })
-
-    textArea.addEventListener('click', () => {
-        textArea.style.color = 'black';
-        textArea.style.backgroundColor = 'lightgrey';
-    })
-
-    messageDiv.querySelector('.edit-btn').style.display = 'none';
 }
 
 
@@ -177,6 +153,39 @@ form.addEventListener('keyup', (e) => {
 })
 
 ////////////////////////////////////////////
+
+function editMessage(uniqueId) {
+    const messageDiv = document.getElementById(uniqueId);
+    const messageText = messageDiv.textContent;
+
+    // Create a text area element
+    const textarea = document.createElement('textarea');
+    textarea.value = messageText;
+
+    // Replace the message element with the text area
+    messageDiv.parentNode.replaceChild(textarea, messageDiv);
+
+    // Add event listeners to handle editing the message
+    textarea.addEventListener('keydown', function(e) {
+        // Disable editing when the Enter key is pressed
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            this.disabled = true;
+            this.style.color = '#000';
+            this.style.backgroundColor = '#f4f4f4';
+        }
+    });
+
+    textarea.addEventListener('blur', function() {
+        // Revert the message back to a div element when the text area loses focus
+        const newMessageDiv = document.createElement('div');
+        newMessageDiv.textContent = this.value;
+        newMessageDiv.id = uniqueId;
+        this.parentNode.replaceChild(newMessageDiv, this);
+    });
+}
+
+
 
 
 
