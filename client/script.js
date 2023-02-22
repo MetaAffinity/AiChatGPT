@@ -44,12 +44,23 @@ function generateUniqueId() {
     return `id-${timestamp}-${hexadecimalString}`;
 }
 
-function chatStripe(isAi, value, uniqueId) {
+//function chatStripe(isAi, value, uniqueId) {
     // new added
+    /*const profileImgSrc = isAi ? bot : user;
+    const profileImgAlt = isAi ? 'bot' : 'user';
+    const messageText = isAi ? '' : value;*/ // only show message text for user stripe
+// end added
+function chatStripe(isAi, value, uniqueId, isEditable = false) {
     const profileImgSrc = isAi ? bot : user;
     const profileImgAlt = isAi ? 'bot' : 'user';
-    const messageText = isAi ? '' : value; // only show message text for user stripe
-// end added
+
+    const messageHtml = isEditable ? 
+        `<textarea class="edit-area">${value}</textarea>` :
+        `<div class="message" id=${uniqueId}>${value}</div>`;
+
+    const editButtonHtml = isEditable ?
+        `<button class="edit-btn">Save</button>` :
+        `<button class="edit-btn">Edit</button>`;
     return (
         `
         <div class="wrapper ${isAi && 'ai'}">
@@ -64,6 +75,7 @@ function chatStripe(isAi, value, uniqueId) {
                 ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
             </div>
             ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
+            ${editButtonHtml}
         </div>
     `
     )
@@ -154,29 +166,33 @@ form.addEventListener('keyup', (e) => {
 
 
 
+  
+chatContainer.addEventListener('click', (e) => {
+    const editBtn = e.target.closest('.edit-btn');
+    if (editBtn) {
+        const wrapper = editBtn.closest('.wrapper');
+        const messageDiv = wrapper.querySelector('.message');
+        const editArea = wrapper.querySelector('.edit-area');
 
-function makeEditable(element) {
-    const originalText = element.innerText;
-  
-    const textarea = document.createElement('textarea');
-    textarea.value = originalText;
-    element.replaceWith(textarea);
-  
-    textarea.addEventListener('blur', () => {
-      const updatedText = textarea.value.trim();
-      const newElement = document.createElement('div');
-      newElement.classList.add('message');
-      newElement.innerText = updatedText || originalText;
-      textarea.replaceWith(newElement);
-    });
-  }
-  
-  // Inside the response block of the handleSubmit function:
-  
-  const parsedData = data.bot.trim();
-  const messageDiv = document.getElementById(uniqueId);
-  messageDiv.innerHTML = parsedData;
-  makeEditable(messageDiv);
+        if (editArea) {
+            // Save changes
+            const newValue = editArea.value.trim();
+            if (newValue !== '') {
+                messageDiv.innerText = newValue;
+            }
+        } else {
+            // Enter edit mode
+            const messageText = messageDiv.innerText.trim();
+            wrapper.innerHTML = chatStripe(
+                wrapper.classList.contains('ai'),
+                messageText,
+                messageDiv.id,
+                true
+            );
+        }
+    }
+});
+
   
 
 /* COpy response text with buttons*/
