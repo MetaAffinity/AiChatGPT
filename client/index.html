@@ -39,7 +39,7 @@
 
     <div id="app"> <!-- apstart-->
 
-      
+
       <div class="topnav">
         <a href="#home" class="active">Logo</a>
         <div id="myLinks">
@@ -98,6 +98,16 @@
 
     <script type="module" src="script.js"></script>
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+<script>
+  const copyBtns = document.querySelectorAll('.copy-btn');
+  const clipboard = new ClipboardJS(copyBtns);
+
+  clipboard.on('success', function(e) {
+    console.log('Copied to clipboard:', e.text);
+  });
+</script>
 
 <!-- Voice Recognition -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
