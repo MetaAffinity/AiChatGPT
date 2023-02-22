@@ -56,7 +56,6 @@ function chatStripe(isAi, value, uniqueId) {
                     />
                 </div>
                 <div class="message" id=${uniqueId}>${value}</div>
-                ${isAi ? `<button class="copy-btn" data-clipboard-target="#${uniqueId}">Copy</button>` : ''}
             </div>
         </div>
     `
@@ -64,7 +63,7 @@ function chatStripe(isAi, value, uniqueId) {
 }
 
 const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const data = new FormData(form)
 
@@ -109,7 +108,29 @@ const handleSubmit = async (e) => {
         const data = await response.json();
         const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
 
-        typeText(messageDiv, parsedData)
+        typeText(messageDiv, parsedData, uniqueId)
+        function typeText(element, text, uniqueId) {
+            let index = 0;
+          
+            let interval = setInterval(() => {
+              if (index < text.length) {
+                element.innerHTML += text.charAt(index);
+                index++;
+              } else {
+                clearInterval(interval);
+              }
+            }, 20);
+          
+            // add copy function after typing text is finished
+            interval.onfinish = () => {
+              const copyButton = document.createElement('button');
+              copyButton.textContent = 'Copy';
+              copyButton.addEventListener('click', () => {
+                copyText(uniqueId);
+              });
+              element.appendChild(copyButton);
+            };
+          } 
     } else {
         const err = await response.text()
 
@@ -127,3 +148,14 @@ form.addEventListener('keyup', (e) => {
 
 //copyRecponse
 
+function copyText(elementId) {
+    const element = document.getElementById(elementId);
+    const text = element.innerText;
+    const tempInput = document.createElement('input');
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    alert(`Copied: ${text}`);
+  }
