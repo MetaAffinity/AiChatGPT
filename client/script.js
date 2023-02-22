@@ -66,7 +66,8 @@ function chatStripe(isAi, value, uniqueId) {
                     alt="${profileImgAlt}" 
                     />
                 </div>
-                <div class="message" id=${uniqueId} contentEditable=${isAi}>${messageText}</div>
+                <div class="message" id=${uniqueId} contentEditable="${isAi ? 'false' : 'true'}">${messageText}</div>
+                ${isAi ? '' : '<button class="edit-btn">Edit</button>'}
                 ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
             </div>
             ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
@@ -74,6 +75,7 @@ function chatStripe(isAi, value, uniqueId) {
     `
     )
 }
+
 
 
 
@@ -160,7 +162,36 @@ form.addEventListener('keyup', (e) => {
 
 ////////////////////////////////////////////
 
-  
+chatContainer.addEventListener('click', (e) => {
+    const editBtn = e.target.closest('.edit-btn');
+    if (editBtn) {
+        const messageDiv = editBtn.previousElementSibling;
+        const messageText = messageDiv.innerText;
+        const messageTextarea = document.createElement('textarea');
+        messageTextarea.value = messageText;
+        messageDiv.replaceWith(messageTextarea);
+        messageTextarea.focus();
+        editBtn.innerText = 'Save';
+
+        // Change button back to Edit on blur or enter key press
+        const onBlur = () => {
+            messageDiv.innerText = messageTextarea.value.trim();
+            messageTextarea.replaceWith(messageDiv);
+            editBtn.innerText = 'Edit';
+            messageDiv.removeEventListener('blur', onBlur);
+            messageDiv.removeEventListener('keypress', onKeypress);
+        };
+
+        const onKeypress = (e) => {
+            if (e.keyCode === 13) {
+                onBlur();
+            }
+        };
+
+        messageDiv.addEventListener('blur', onBlur);
+        messageDiv.addEventListener('keypress', onKeypress);
+    }
+});
 
 /* COpy response text with buttons*/
 const copyTextToClipboard = (text) => {
