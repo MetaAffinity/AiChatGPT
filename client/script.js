@@ -82,7 +82,33 @@ const handleSubmit = async (e) => {
     e.preventDefault()
 
     const data = new FormData(form)
+    let responseText = '';
+    const prompt = data.get('prompt').toLowerCase();
 
+    // check if the user's input matches a custom chat prompt
+    if (prompt.includes('hello')) {
+        responseText = 'Hello there!';
+    } else {
+        // fetch the response from the AI chatbot
+        const response = await fetch('https://metaaffinityaichat.onrender.com', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                prompt: data.get('prompt')
+            })
+        })
+
+        if (response.ok) {
+            const data = await response.json();
+            responseText = data.bot.trim(); // trims any trailing spaces/'\n'
+        } else {
+            const err = await response.text();
+            console.log('Error:', err);
+            responseText = 'Sorry, something went wrong.';
+        }
+    }
     // user's chatstripe
     chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
 
