@@ -140,6 +140,8 @@ chatContainer.addEventListener('click', (e) => {
         copyTextToClipboard(message);
         copyBtn.innerText = 'Copied';
         copyBtn.disabled = true;
+
+        setTimeout (copyBtn.innerText, 3000)
     }
 });
 
