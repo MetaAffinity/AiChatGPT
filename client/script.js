@@ -98,16 +98,43 @@ const handleSubmit = async (e) => {
 
 
 
-    //const response = await fetch('http://localhost:5000/', {
-    const response = await fetch('https://metaaffinityaichat.onrender.com', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            prompt: data.get('prompt')
-        })
-    })
+    // check for custom prompt
+    const prompt = data.get('prompt').toLowerCase();
+    let botResponse = '';
+
+    switch (prompt) {
+        case 'hi':
+        case 'hello':
+            botResponse = 'Hi there!';
+            break;
+        case 'how are you':
+            botResponse = "I'm doing well, thank you for asking!";
+            break;
+        case 'what is your name':
+            botResponse = "My name is ChatGPT!";
+            break;
+        default:
+            // send prompt to backend
+            const response = await fetch('https://metaaffinityaichat.onrender.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                botResponse = data.bot.trim(); // trims any trailing spaces/'\n' 
+            } else {
+                const err = await response.text();
+                alert(err);
+                botResponse = "Something went wrong";
+            }
+            break;
+    }
 
     clearInterval(loadInterval)
     messageDiv.innerHTML = " "
@@ -154,36 +181,8 @@ form.addEventListener('keyup', (e) => {
 
 ////////////////////////////////////////////
 
-function editMessage(uniqueId) {
-    const messageDiv = document.getElementById(uniqueId);
-    const messageText = messageDiv.textContent;
 
-    // Create a text area element
-    const textarea = document.createElement('textarea');
-    textarea.value = messageText;
 
-    // Replace the message element with the text area
-    messageDiv.parentNode.replaceChild(textarea, messageDiv);
-
-    // Add event listeners to handle editing the message
-    textarea.addEventListener('keydown', function(e) {
-        // Disable editing when the Enter key is pressed
-        if (e.keyCode === 13) {
-            e.preventDefault();
-            this.disabled = true;
-            this.style.color = '#000';
-            this.style.backgroundColor = '#f4f4f4';
-        }
-    });
-
-    textarea.addEventListener('blur', function() {
-        // Revert the message back to a div element when the text area loses focus
-        const newMessageDiv = document.createElement('div');
-        newMessageDiv.textContent = this.value;
-        newMessageDiv.id = uniqueId;
-        this.parentNode.replaceChild(newMessageDiv, this);
-    });
-}
 
 
 
