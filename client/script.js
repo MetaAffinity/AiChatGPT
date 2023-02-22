@@ -150,6 +150,35 @@ form.addEventListener('keyup', (e) => {
     }
 })
 
+
+
+
+
+
+function makeEditable(element) {
+    const originalText = element.innerText;
+  
+    const textarea = document.createElement('textarea');
+    textarea.value = originalText;
+    element.replaceWith(textarea);
+  
+    textarea.addEventListener('blur', () => {
+      const updatedText = textarea.value.trim();
+      const newElement = document.createElement('div');
+      newElement.classList.add('message');
+      newElement.innerText = updatedText || originalText;
+      textarea.replaceWith(newElement);
+    });
+  }
+  
+  // Inside the response block of the handleSubmit function:
+  
+  const parsedData = data.bot.trim();
+  const messageDiv = document.getElementById(uniqueId);
+  messageDiv.innerHTML = parsedData;
+  makeEditable(messageDiv);
+  
+
 /* COpy response text with buttons*/
 const copyTextToClipboard = (text) => {
     const textArea = document.createElement('textarea');
