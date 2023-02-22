@@ -55,8 +55,9 @@ function chatStripe(isAi, value, uniqueId) {
     const profileImgSrc = isAi ? bot : user;
     const profileImgAlt = isAi ? 'bot' : 'user';
     const messageText = isAi ? '' : value; // only show message text for user stripe
-    //const editable = isAi ? false : true;
-    const editable = isAi ? '' : value;
+    const contentEditable = isAi ? false : true; // make response message text editable
+    const editButton = isAi ? '' : `<button class="edit-btn">Edit</button>`; // add edit button for response message stripe
+    const messageHtml = isAi ? value : `<div class="message-text" contenteditable="${contentEditable}">${value}</div>`; // wrap response message text inside contenteditable div
     // end added
     return (
         `
@@ -68,15 +69,18 @@ function chatStripe(isAi, value, uniqueId) {
                     alt="${profileImgAlt}" 
                     />
                 </div>
-                <div class="message" id=${uniqueId} contentEditable=${editable}>${value}</div>
+                <div class="message" id=${uniqueId}>
+                    ${messageHtml}
+                    ${editButton}
+                </div>
                 ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
-                ${isAi ? '' : '<button class="edit-btn">Edit</button>'}
             </div>
             ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
         </div>
     `
     )
 }
+
 
 
 const handleSubmit = async (e) => {
@@ -162,31 +166,35 @@ form.addEventListener('keyup', (e) => {
 
 ////////////////////////////////////////////
 
-
+// Event listener for the "Edit" button click
 chatContainer.addEventListener('click', (e) => {
-    const copyBtn = e.target.closest('.copy-btn');
-    if (copyBtn) {
-        const message = copyBtn.previousElementSibling.innerText;
-        copyTextToClipboard(message);
-        copyBtn.innerText = 'Copied';
-        copyBtn.disabled = true;
-
-        setTimeout(() => {
-            copyBtn.innerText = "Copy";
-            copyBtn.disabled = false;
-        }, 4000);
-    }
-
     const editBtn = e.target.closest('.edit-btn');
     if (editBtn) {
-        const messageDiv = editBtn.previousElementSibling;
-        if (messageDiv.contentEditable === "true") {
-            messageDiv.contentEditable = "false";
-            editBtn.innerText = "Edit";
-        } else {
-            messageDiv.contentEditable = "true";
-            editBtn.innerText = "Save";
-        }
+        const messageText = editBtn.previousElementSibling;
+        messageText.contentEditable = 'true';
+        messageText.focus();
+        editBtn.textContent = 'Save';
+        editBtn.classList.add('save-btn');
+    }
+});
+
+// Event listener for the "Save" button click (which replaces the "Edit" button)
+chatContainer.addEventListener('click', (e) => {
+    const saveBtn = e.target.closest('.save-btn');
+    if (saveBtn) {
+        const messageText = saveBtn.previousElementSibling;
+        messageText.contentEditable = 'false';
+        saveBtn.textContent = 'Edit';
+        saveBtn.classList.remove('save-btn');
+    }
+});
+
+// Event listener for the contenteditable message text's blur event (which triggers the "Save" button click)
+chatContainer.addEventListener('blur', (e) => {
+    const messageText = e.target.closest('.message-text');
+    if (messageText) {
+        const saveBtn = messageText.nextElementSibling;
+        saveBtn.click();
     }
 });
 
