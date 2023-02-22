@@ -3,16 +3,7 @@ import user from './assets/user.svg'
 
 const form = document.querySelector('form')
 const chatContainer = document.querySelector('#chat_container')
-const clipboard = new ClipboardJS('.copy-btn');
-chatContainer.addEventListener('click', (e) => {
-  if (e.target.classList.contains('copy-btn')) {
-      const btn = e.target;
-      btn.textContent = 'Copied!';
-      setTimeout(() => {
-          btn.textContent = 'Copy';
-      }, 3000);
-  }
-});
+
 let loadInterval
 
 function loader(element) {
@@ -65,7 +56,6 @@ function chatStripe(isAi, value, uniqueId) {
                     />
                 </div>
                 <div class="message" id=${uniqueId}>${value}</div>
-                ${isAi ? `<button class="copy-btn" data-clipboard-target="#${uniqueId}">Copy</button>` : ''}
             </div>
         </div>
     `
@@ -123,6 +113,14 @@ const handleSubmit = async (e) => {
         messageDiv.innerHTML = "Something went wrong"
         alert(err)
     }
+        // add event listener for copying bot message on click
+        if (messageDiv.classList.contains('ai')) {
+            messageDiv.addEventListener('click', () => {
+                const textToCopy = messageDiv.textContent.trim()
+                navigator.clipboard.writeText(textToCopy)
+                alert(`Copied: ${textToCopy}`) 
+            })
+            }
 }
 
 form.addEventListener('submit', handleSubmit)
