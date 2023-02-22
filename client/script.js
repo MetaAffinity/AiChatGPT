@@ -109,6 +109,25 @@ const handleSubmit = async (e) => {
         const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
 
         typeText(messageDiv, parsedData)
+
+
+        // create copy button after typing text effect is finished
+        setTimeout(() => {
+        messageDiv.innerHTML += '<button class="copy-button">Copy</button>'
+        const copyButton = messageDiv.querySelector('.copy-button')
+        copyButton.addEventListener('click', () => {
+            const textToCopy = messageDiv.textContent
+            navigator.clipboard.writeText(textToCopy)
+            copyButton.textContent = 'Copied'
+            setTimeout(() => {
+                copyButton.textContent = 'Copy'
+            }, 2000)
+        })
+    }, 500 + (20 * parsedData.length))
+
+
+
+
     } else {
         const err = await response.text()
 
@@ -124,7 +143,7 @@ form.addEventListener('keyup', (e) => {
     }
 })
 
-
+/* COpy response text with buttons
 const copyTextToClipboard = (text) => {
     const textArea = document.createElement('textarea');
     textArea.value = text;
@@ -145,12 +164,12 @@ chatContainer.addEventListener('click', (e) => {
         setTimeout(() => {
             copyBtn.innerText = "Copy";
             copyBtn.disabled = false;
-        }, 2000);
+        }, 4000);
 
         
     }
 });
-
+*/
 
 // copy the response message..
 /*
