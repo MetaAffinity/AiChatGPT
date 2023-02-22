@@ -44,7 +44,15 @@ function generateUniqueId() {
     return `id-${timestamp}-${hexadecimalString}`;
 }
 
-function chatStripe(isAi, value, uniqueId) {
+function chatStripe(isAi, value, hasCopyButton, uniqueId) {
+    // new added
+    const copyButtonHtml = hasCopyButton
+    ? `
+      <button class="copy-btn">
+        Copy
+      </button>
+    `
+    : '';//end new added
     return (
         `
         <div class="wrapper ${isAi && 'ai'}">
@@ -55,8 +63,8 @@ function chatStripe(isAi, value, uniqueId) {
                       alt="${isAi ? 'bot' : 'user'}" 
                     />
                 </div>
-                ${value ? `<div class="message" id=${uniqueId}>${value}</div>` : ''}
-                ${isAi && '<button class="copy-btn">Copy</button>'}
+                <div class="message" id=${uniqueId}>${value}</div>
+                ${copyButtonHtml}
             </div>
             
         </div>
@@ -70,7 +78,9 @@ const handleSubmit = async (e) => {
     const data = new FormData(form)
 
     // user's chatstripe
-    chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
+    //chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
+    chatContainer.innerHTML += chatStripe(false, data.get('prompt'), false);
+
 
     // to clear the textarea input 
     form.reset()
