@@ -50,17 +50,13 @@ function generateUniqueId() {
     const profileImgAlt = isAi ? 'bot' : 'user';
     const messageText = isAi ? '' : value;*/ // only show message text for user stripe
 // end added
-function chatStripe(isAi, value, uniqueId, isEditable = false) {
+function chatStripe(isAi, value, uniqueId) {
+    // new added
     const profileImgSrc = isAi ? bot : user;
     const profileImgAlt = isAi ? 'bot' : 'user';
-
-    const messageHtml = isEditable ? 
-        `<textarea class="edit-area">${value}</textarea>` :
-        `<div class="message" id=${uniqueId}>${value}</div>`;
-
-    const editButtonHtml = isEditable ?
-        `<button class="edit-btn">Save</button>` :
-        `<button class="edit-btn">Edit</button>`;
+    const messageText = isAi ? '' : value; // only show message text for user stripe
+    const editable = isAi ? false : true;
+    // end added
     return (
         `
         <div class="wrapper ${isAi && 'ai'}">
@@ -71,15 +67,16 @@ function chatStripe(isAi, value, uniqueId, isEditable = false) {
                     alt="${profileImgAlt}" 
                     />
                 </div>
-                <div class="message" id=${uniqueId}>${value}</div>
+                <div class="message" id=${uniqueId} contentEditable=${editable}>${value}</div>
                 ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
+                ${isAi ? '' : '<button class="edit-btn">Edit</button>'}
             </div>
             ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
-            ${editButtonHtml}
         </div>
     `
     )
 }
+
 
 const handleSubmit = async (e) => {
     e.preventDefault()
@@ -165,30 +162,29 @@ form.addEventListener('keyup', (e) => {
 
 
 
-
-  
 chatContainer.addEventListener('click', (e) => {
+    const copyBtn = e.target.closest('.copy-btn');
+    if (copyBtn) {
+        const message = copyBtn.previousElementSibling.innerText;
+        copyTextToClipboard(message);
+        copyBtn.innerText = 'Copied';
+        copyBtn.disabled = true;
+
+        setTimeout(() => {
+            copyBtn.innerText = "Copy";
+            copyBtn.disabled = false;
+        }, 4000);
+    }
+
     const editBtn = e.target.closest('.edit-btn');
     if (editBtn) {
-        const wrapper = editBtn.closest('.wrapper');
-        const messageDiv = wrapper.querySelector('.message');
-        const editArea = wrapper.querySelector('.edit-area');
-
-        if (editArea) {
-            // Save changes
-            const newValue = editArea.value.trim();
-            if (newValue !== '') {
-                messageDiv.innerText = newValue;
-            }
+        const messageDiv = editBtn.previousElementSibling;
+        if (messageDiv.contentEditable === "true") {
+            messageDiv.contentEditable = "false";
+            editBtn.innerText = "Edit";
         } else {
-            // Enter edit mode
-            const messageText = messageDiv.innerText.trim();
-            wrapper.innerHTML = chatStripe(
-                wrapper.classList.contains('ai'),
-                messageText,
-                messageDiv.id,
-                true
-            );
+            messageDiv.contentEditable = "true";
+            editBtn.innerText = "Save";
         }
     }
 });
