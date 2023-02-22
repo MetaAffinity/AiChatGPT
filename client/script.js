@@ -123,7 +123,11 @@ form.addEventListener('keyup', (e) => {
 })
 
 
-// copy the response message
+
+
+
+// copy the response message..
+/*
 function copyToClipboard(text) {
     const input = document.createElement('textarea');
     input.style.position = 'fixed';
@@ -146,4 +150,4 @@ function copyToClipboard(text) {
       copyResponseText(e.target);
     }
   });
-  
+  */
