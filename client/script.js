@@ -141,7 +141,12 @@ chatContainer.addEventListener('click', (e) => {
         copyBtn.innerText = 'Copied';
         copyBtn.disabled = true;
 
-        setTimeout (copyBtn.innerText, 3000)
+        setTimeout(() => {
+            copyBtn.innerText = "Copy";
+            copyBtn.disabled = false;
+        }, 2000);
+
+        
     }
 });
 
