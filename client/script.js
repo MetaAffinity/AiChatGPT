@@ -44,14 +44,12 @@ function generateUniqueId() {
     return `id-${timestamp}-${hexadecimalString}`;
 }
 
-
-
 function chatStripe(isAi, value, uniqueId) {
+    // new added
     const profileImgSrc = isAi ? bot : user;
     const profileImgAlt = isAi ? 'bot' : 'user';
-    const messageText = isAi ? '' : value;
-    const messageElem = isAi ? `<div class="message" id=${uniqueId}></div>` : `<div class="message" id=${uniqueId}>${value}</div>`;
-    const editButton = isAi ? '' : `<button class="edit-btn" onclick="editMessage('${uniqueId}')">Edit</button>`;
+    const messageText = isAi ? '' : value; // only show message text for user stripe
+    // end added
     return (
         `
         <div class="wrapper ${isAi && 'ai'}">
@@ -62,13 +60,16 @@ function chatStripe(isAi, value, uniqueId) {
                     alt="${profileImgAlt}" 
                     />
                 </div>
-                ${messageElem}
-                ${editButton}
+                <div class="message" id=${uniqueId}>${value}</div>
+                ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
             </div>
+            ${isAi ? '<button class="edit-btn">Edit</button>' : ''}
         </div>
     `
     )
 }
+
+
 
 
 const handleSubmit = async (e) => {
@@ -98,43 +99,16 @@ const handleSubmit = async (e) => {
 
 
 
-    // check for custom prompt
-    const prompt = data.get('prompt').toLowerCase();
-    let botResponse = '';
-
-    switch (prompt) {
-        case 'hi':
-        case 'hello':
-            botResponse = 'Hi there!';
-            break;
-        case 'how are you':
-            botResponse = "I'm doing well, thank you for asking!";
-            break;
-        case 'what is your name':
-            botResponse = "My name is ChatGPT!";
-            break;
-        default:
-            // send prompt to backend
-            const response = await fetch('https://metaaffinityaichat.onrender.com', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    prompt,
-                }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                botResponse = data.bot.trim(); // trims any trailing spaces/'\n' 
-            } else {
-                const err = await response.text();
-                alert(err);
-                botResponse = "Something went wrong";
-            }
-            break;
-    }
+    //const response = await fetch('http://localhost:5000/', {
+    const response = await fetch('https://metaaffinityaichat.onrender.com', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            prompt: data.get('prompt')
+        })
+    })
 
     clearInterval(loadInterval)
     messageDiv.innerHTML = " "
@@ -180,11 +154,6 @@ form.addEventListener('keyup', (e) => {
 })
 
 ////////////////////////////////////////////
-
-
-
-
-
 
 
 
