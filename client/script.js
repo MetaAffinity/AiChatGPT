@@ -44,12 +44,18 @@ function generateUniqueId() {
     return `id-${timestamp}-${hexadecimalString}`;
 }
 
+//function chatStripe(isAi, value, uniqueId) {
+    // new added
+    /*const profileImgSrc = isAi ? bot : user;
+    const profileImgAlt = isAi ? 'bot' : 'user';
+    const messageText = isAi ? '' : value;*/ // only show message text for user stripe
+// end added
 function chatStripe(isAi, value, uniqueId) {
     // new added
     const profileImgSrc = isAi ? bot : user;
     const profileImgAlt = isAi ? 'bot' : 'user';
     const messageText = isAi ? '' : value; // only show message text for user stripe
-    // end added
+// end added
     return (
         `
         <div class="wrapper ${isAi && 'ai'}">
@@ -63,7 +69,7 @@ function chatStripe(isAi, value, uniqueId) {
                 <div class="message" id=${uniqueId}>${value}</div>
                 ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
             </div>
-            ${isAi ? '<button class="edit-btn">Edit</button>' : ''}
+            ${isAi ? '<button class="copy-btn">Copy</button>' : ''}
         </div>
     `
     )
