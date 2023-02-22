@@ -57,6 +57,7 @@ function chatStripe(isAi, value, uniqueId) {
                 </div>
                 <div class="message" id=${uniqueId}>${value}</div>
             </div>
+            ${isAi && '<button class="copy-btn">Copy</button>'}
         </div>
     `
     )
@@ -123,7 +124,24 @@ form.addEventListener('keyup', (e) => {
 })
 
 
+const copyTextToClipboard = (text) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+};
 
+chatContainer.addEventListener('click', (e) => {
+    const copyBtn = e.target.closest('.copy-btn');
+    if (copyBtn) {
+        const message = copyBtn.previousElementSibling.innerText;
+        copyTextToClipboard(message);
+        copyBtn.innerText = 'Copied';
+        copyBtn.disabled = true;
+    }
+});
 
 
 // copy the response message..
