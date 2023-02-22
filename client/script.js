@@ -82,36 +82,9 @@ const handleSubmit = async (e) => {
     e.preventDefault()
 
     const data = new FormData(form)
-    let responseText = '';
-    const prompt = data.get('prompt').toLowerCase();
 
-    // check if the user's input matches a custom chat prompt
-    if (prompt.includes('hello')) {
-        responseText = 'Hello there!';
-    } else {
-        // fetch the response from the AI chatbot
-        const response = await fetch('https://metaaffinityaichat.onrender.com', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                prompt: data.get('prompt')
-            })
-        })
-
-        if (response.ok) {
-            const data = await response.json();
-            responseText = data.bot.trim(); // trims any trailing spaces/'\n'
-        } else {
-            const err = await response.text();
-            console.log('Error:', err);
-            responseText = 'Sorry, something went wrong.';
-        }
-    }
     // user's chatstripe
     chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
-
 
     // to clear the textarea input 
     form.reset()
@@ -129,52 +102,43 @@ const handleSubmit = async (e) => {
     // messageDiv.innerHTML = "..."
     loader(messageDiv)
 
+    // check if user input contains a specific keyword or phrase
+    const prompt = data.get('prompt').toLowerCase()
+    let responseText = ''
+    if (prompt.includes('hello') || prompt.includes('hi')) {
+        responseText = 'Hi there! How can I help you today?'
+    } else if (prompt.includes('how are you')) {
+        responseText = 'I am just a computer program, so I cannot feel emotions, but thank you for asking!'
+    } else {
+        // if no specific keyword or phrase is detected, send the prompt to the server
+        responseText = await sendToServer(prompt)
+    }
 
+    clearInterval(loadInterval)
+    messageDiv.innerHTML = " "
 
-    //const response = await fetch('http://localhost:5000/', {
+    typeText(messageDiv, responseText)
+}
+
+async function sendToServer(prompt) {
     const response = await fetch('https://metaaffinityaichat.onrender.com', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            prompt: data.get('prompt')
+            prompt
         })
     })
 
-    clearInterval(loadInterval)
-    messageDiv.innerHTML = " "
-
     if (response.ok) {
         const data = await response.json();
-        const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
-
-        typeText(messageDiv, parsedData)
-
-
-        // create copy button after typing text effect is finished
-       /*
-        setTimeout(() => {
-        messageDiv.innerHTML += '<button class="copy-button">Copy</button>'
-        const copyButton = messageDiv.querySelector('.copy-button')
-        copyButton.addEventListener('click', () => {
-            const textToCopy = messageDiv.textContent
-            navigator.clipboard.writeText(textToCopy)
-            copyButton.textContent = 'Copied'
-            setTimeout(() => {
-                copyButton.textContent = 'Copy'
-            }, 2000)
-        })
-        }, 500 + (20 * parsedData.length))
-        */
-
-
-
+        const parsedData = data.bot.trim() // trims any trailing spaces/'\n'
+        return parsedData
     } else {
         const err = await response.text()
-
-        messageDiv.innerHTML = "Something went wrong"
         alert(err)
+        return 'Something went wrong'
     }
 }
 
