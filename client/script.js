@@ -45,14 +45,7 @@ function generateUniqueId() {
 }
 
 function chatStripe(isAi, value, uniqueId) {
-    // new added
-    const copyButtonHtml = hasCopyButton
-    ? `
-      <button class="copy-btn">
-        Copy
-      </button>
-    `
-    : '';//end new added
+
     return (
         `
         <div class="wrapper ${isAi && 'ai'}">
@@ -64,7 +57,8 @@ function chatStripe(isAi, value, uniqueId) {
                     />
                 </div>
                 <div class="message" id=${uniqueId}>${value}</div>
-                ${copyButtonHtml}
+                ${isAi && '<button class="copy-btn">Copy</button>'}
+                
             </div>
             
         </div>
