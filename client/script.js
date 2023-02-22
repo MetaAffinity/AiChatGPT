@@ -124,13 +124,6 @@ form.addEventListener('keyup', (e) => {
 
 
 // copy the response message
-
-function updateButton(button) {
-    button.textContent = 'Copied';
-    button.disabled = true;
-  }
-
-
 function copyToClipboard(text) {
     const input = document.createElement('textarea');
     input.style.position = 'fixed';
@@ -142,20 +135,15 @@ function copyToClipboard(text) {
     document.body.removeChild(input);
   }
   
-  chatContainer.addEventListener('click', (e) => {
-    if (e.target.classList.contains('message') && !e.target.classList.contains('loader')) {
-      const button = document.createElement('button');
-      button.classList.add('copy-btn');
-      button.textContent = 'Copy';
-      e.target.appendChild(button);
-      copyResponseText(e.target, button);
-    }
-  });
+  function copyResponseText(element) {
+    const responseText = element.innerText.trim();
+    copyToClipboard(responseText);
+    alert(`"${responseText}" has been copied to your clipboard.`);
+  }
   
   chatContainer.addEventListener('click', (e) => {
-    if (e.target.classList.contains('copy-btn')) {
-      const message = e.target.parentNode;
-      copyResponseText(message, e.target);
+    if (e.target.classList.contains('message') && !e.target.classList.contains('loader')) {
+      copyResponseText(e.target);
     }
   });
   
