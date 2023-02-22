@@ -56,7 +56,6 @@ function chatStripe(isAi, value, uniqueId) {
                     />
                 </div>
                 <div class="message" id=${uniqueId}>${value}</div>
-                <button class="copy-button" data-message="${value}">Copy</button>
             </div>
         </div>
     `
@@ -80,16 +79,6 @@ const handleSubmit = async (e) => {
 
     // to focus scroll to the bottom 
     chatContainer.scrollTop = chatContainer.scrollHeight;
-
-
-    // get the text of the associated message form the  data-message attribute
-    chatContainer.addEventListener('click', (e) => {
-        if (e.target.classList.contains('copy-button')) {
-          const message = e.target.getAttribute('data-message')
-          copyToClipboard(message)
-        }
-      })
-
 
     // specific message div 
     const messageDiv = document.getElementById(uniqueId)
@@ -133,17 +122,3 @@ form.addEventListener('keyup', (e) => {
         handleSubmit(e)
     }
 })
-
-
-
-
-// copytoclipboard function
-function copyToClipboard(text) {
-    const tempInput = document.createElement('input')
-    tempInput.value = text
-    document.body.appendChild(tempInput)
-    tempInput.select()
-    document.execCommand('copy')
-    document.body.removeChild(tempInput)
-  }
-  
