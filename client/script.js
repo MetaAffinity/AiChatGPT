@@ -56,8 +56,9 @@ function chatStripe(isAi, value, uniqueId) {
                     />
                 </div>
                 <div class="message" id=${uniqueId}>${value}</div>
+                ${isAi && '<button class="copy-btn">Copy</button>'}
             </div>
-            ${isAi && '<button class="copy-btn">Copy</button>'}
+            
         </div>
     `
     )
