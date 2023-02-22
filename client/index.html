@@ -108,16 +108,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 <script>
-  const clipboard = new ClipboardJS('.copy-btn');
-  chatContainer.addEventListener('click', (e) => {
-    if (e.target.classList.contains('copy-btn')) {
-        const btn = e.target;
-        btn.textContent = 'Copied!';
-        setTimeout(() => {
-            btn.textContent = 'Copy';
-        }, 3000);
-    }
-});
+
 
   </script>
   </body>

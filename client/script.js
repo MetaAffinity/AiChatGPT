@@ -3,7 +3,16 @@ import user from './assets/user.svg'
 
 const form = document.querySelector('form')
 const chatContainer = document.querySelector('#chat_container')
-
+const clipboard = new ClipboardJS('.copy-btn');
+chatContainer.addEventListener('click', (e) => {
+  if (e.target.classList.contains('copy-btn')) {
+      const btn = e.target;
+      btn.textContent = 'Copied!';
+      setTimeout(() => {
+          btn.textContent = 'Copy';
+      }, 3000);
+  }
+});
 let loadInterval
 
 function loader(element) {
