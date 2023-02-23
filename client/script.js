@@ -79,15 +79,27 @@ function chatStripe(isAi, value, uniqueId) {
     `
     )
 }
-
+//23 feb
+const MAX_MESSAGES_PER_DAY = 5;
+const MESSAGE_COUNT_KEY = 'messageCount';
+const LAST_MESSAGE_TIMESTAMP_KEY = 'lastMessageTimestamp';
 
 const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault(); //; remove if not the above code 23feb
 
 
     //new lines ///////////////
   
+  // Check if the user has already exceeded the message limit
+  const messageCount = Number(localStorage.getItem(MESSAGE_COUNT_KEY)) || 0;
+  const lastMessageTimestamp = Number(localStorage.getItem(LAST_MESSAGE_TIMESTAMP_KEY)) || 0;
+  const currentTimeStamp = Date.now();
+  const timeSinceLastMessage = currentTimeStamp - lastMessageTimestamp;
 
+  if (messageCount >= MAX_MESSAGES_PER_DAY && timeSinceLastMessage < 24 * 60 * 60 * 1000) {
+    alert('You have exceeded the message limit for today. Please try again tomorrow.');
+    return;
+  }
     //end lines////////////
 
     const data = new FormData(form)
