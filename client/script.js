@@ -199,7 +199,7 @@ form.addEventListener('keyup', (e) => {
 })
 
 ////////////////////////////////////////////
-
+/*
 function setCookie(name, value, expirationHours) {
     const date = new Date();
     date.setTime(date.getTime() + (expirationHours * 60 * 60 * 1000));
@@ -218,7 +218,7 @@ function setCookie(name, value, expirationHours) {
     return null;
   }
   
-
+*/
 ///////////////////////////////////////////
 /* COpy response text with buttons*/
 const copyTextToClipboard = (text) => {
