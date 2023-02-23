@@ -80,15 +80,6 @@ function chatStripe(isAi, value, uniqueId) {
     )
 }
 
-//start new lines
-// Get the user's message count from the cookie
-const messageCount = parseInt(getCookie('messageCount') || 0)
-
-// Disable input and submit button if message limit has been reached
-if (messageCount >= 5) {
-  form.prompt.disabled = true
-  form.submitBtn.disabled = true
-}// new line
 
 const handleSubmit = async (e) => {
     e.preventDefault()
@@ -96,28 +87,7 @@ const handleSubmit = async (e) => {
 
     //new lines ///////////////
   
-    // Check if message limit has been reached
-    if (messageCount >= 5) {
-      alert('You have reached the message limit for today. Please try again tomorrow.')
-      return
-    }
-  
-    // Increment the message count and store it in a cookie
-    const newMessageCount = messageCount + 1
-    setCookie('messageCount', newMessageCount, 1) // expires in 24 hours
-  
-    // Rest of the submit handler code...
-  }
-  
-  function getCookie(name) {
-    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')
-    return cookieValue ? cookieValue.pop() : ''
-  }
-  
-  function setCookie(name, value, days) {
-    const expires = new Date(Date.now() + days * 864e5).toUTCString()
-    document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires
-  }
+
     //end lines////////////
 
     const data = new FormData(form)
