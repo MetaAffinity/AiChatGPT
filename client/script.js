@@ -3,9 +3,8 @@ import user from './assets/user.svg'
 
 const form = document.querySelector('form')
 const chatContainer = document.querySelector('#chat_container')
-const messageLimit = 5 // set the message limit here   new line
+
 let loadInterval
-let messageCounter = 0 // initialize the message counter new line
 
 function loader(element) {
     element.textContent = ''
@@ -47,50 +46,8 @@ function generateUniqueId() {
 
 
 // new line 23feb
-function disableInput() {
-    // disable the input field and the submit button
-    form.querySelector('textarea').disabled = true;
-    form.querySelector('button[type="submit"]').disabled = true;
-}
 
-function enableInput() {
-    // enable the input field and the submit button
-    form.querySelector('textarea').disabled = false;
-    form.querySelector('button[type="submit"]').disabled = false;
-}
-
-function setMessageLimit() {
-    // set a cookie to store the message counter and the expiry date
-    const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000) // set the expiry to 24 hours from now
-    document.cookie = `messageCounter=${messageCounter};expires=${expiryDate.toUTCString()};path=/`;
-}
-
-function getMessageCounter() {
-    // get the message counter from the cookie
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith('messageCounter=')) {
-            return parseInt(cookie.substring('messageCounter='.length), 10) || 0;
-        }
-    }
-    return 0;
-}
-
-function checkMessageLimit() {
-    // check if the user has reached the message limit
-    const counter = getMessageCounter();
-    if (counter >= messageLimit) {
-        disableInput();
-        setTimeout(() => {
-            enableInput();
-            setMessageLimit();
-            messageCounter = 0;
-        }, 24 * 60 * 60 * 1000); // set a timeout of 24 hours
-        return true;
-    }
-    return false;
-} // end new line
+ // end new line
 
 //function chatStripe(isAi, value, uniqueId) {
     // new added
@@ -124,6 +81,14 @@ function chatStripe(isAi, value, uniqueId) {
 }
 
 //start new lines
+// Get the user's message count from the cookie
+const messageCount = parseInt(getCookie('messageCount') || 0)
+
+// Disable input and submit button if message limit has been reached
+if (messageCount >= 5) {
+  form.prompt.disabled = true
+  form.submitBtn.disabled = true
+}// new line
 
 const handleSubmit = async (e) => {
     e.preventDefault()
@@ -131,7 +96,28 @@ const handleSubmit = async (e) => {
 
     //new lines ///////////////
   
-
+    / Check if message limit has been reached
+    if (messageCount >= 5) {
+      alert('You have reached the message limit for today. Please try again tomorrow.')
+      return
+    }
+  
+    // Increment the message count and store it in a cookie
+    const newMessageCount = messageCount + 1
+    setCookie('messageCount', newMessageCount, 1) // expires in 24 hours
+  
+    // Rest of the submit handler code...
+  }
+  
+  function getCookie(name) {
+    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')
+    return cookieValue ? cookieValue.pop() : ''
+  }
+  
+  function setCookie(name, value, days) {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString()
+    document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires
+  }
     //end lines////////////
 
     const data = new FormData(form)
