@@ -3,10 +3,9 @@ import user from './assets/user.svg'
 
 const form = document.querySelector('form')
 const chatContainer = document.querySelector('#chat_container')
-const stopButton = document.querySelector('#stop-btn') // new line
 
 let loadInterval
-let shouldGenerateBotResponse = true // new line
+
 
 function loader(element) {
     element.textContent = ''
@@ -93,7 +92,6 @@ const handleSubmit = async (e) => {
     form.reset()
 
     // bot's chatstripe
-if (shouldGenerateBotResponse) { // new line
     const uniqueId = generateUniqueId()
     chatContainer.innerHTML += chatStripe(true, " ", uniqueId)
 
@@ -154,14 +152,9 @@ if (shouldGenerateBotResponse) { // new line
         alert(err)
     }
 }
-}
-////////////////////
-// new function to stop generating bot responses
-function stopBotResponse() {
-    shouldGenerateBotResponse = false
-}
 
-stopButton.addEventListener('click', stopBotResponse) // new line
+////////////////////
+
 ////////////////
 form.addEventListener('submit', handleSubmit)
 form.addEventListener('keyup', (e) => {
