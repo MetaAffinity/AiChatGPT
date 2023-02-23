@@ -89,6 +89,9 @@ function checkMessageLimit() {
   if (messageCount >= 3) {
     form.querySelector('input[type="text"]').disabled = true;
     document.querySelector('#message-limit-exceeded').classList.remove('hidden');
+    const errorDiv = document.querySelector('.message-limit-exceeded');
+        errorDiv.style.display = 'block';
+        return;
   }
 }
 

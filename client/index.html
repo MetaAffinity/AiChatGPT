@@ -53,12 +53,16 @@
       </div>
 
 
-      <div id="chat_container"></div>
+      <div id="chat_container">
+        <div class="error-message message-limit-exceeded" style="display: none;">
+          You have exceeded the message limit. Please wait 24 hours before sending more messages.
+        </div>
+      </div>
 
       <form>
         <textarea id="note-textarea" name="prompt" rows="1" cols="1" placeholder="Ask to MetaAffinity ..."></textarea>
 
-    <div id="message-limit-exceeded">message limit is exceeded</div>
+    <div id="">message limit is exceeded</div>
         <button type="submit"><img src="assets/send.svg" alt="send" />
       </form>
       
