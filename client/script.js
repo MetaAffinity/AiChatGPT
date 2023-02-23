@@ -75,20 +75,30 @@ function chatStripe(isAi, value, uniqueId) {
     )
 }
 
-
-
-
+//start new lines
+const MAX_MESSAGES = 3;
+const MESSAGE_LIMIT_HOURS = 24;
+// end lines
 const handleSubmit = async (e) => {
     e.preventDefault()
 
-// check if user has already sent 5 messages
-const messageCount = parseInt(getCookie('messageCount')) || 0;
-if (messageCount >= 2) {
-    alert('You have reached the maximum number of messages allowed.');
-    return;
-}
 
-    
+    //new lines ///////////////
+  // Check if message limit is exceeded
+  const messageCount = parseInt(getCookie("messageCount") || "0");
+  const lastMessageTimestamp = parseInt(getCookie("lastMessageTimestamp") || "0");
+  const currentTime = Date.now();
+  if (messageCount >= MAX_MESSAGES && (currentTime - lastMessageTimestamp) < MESSAGE_LIMIT_HOURS * 60 * 60 * 1000) {
+    alert("You have reached the message limit. Please try again later.");
+    return;
+  }
+
+  // Increment message count and update last message timestamp in cookies
+  setCookie("messageCount", (messageCount + 1).toString(), MESSAGE_LIMIT_HOURS);
+  setCookie("lastMessageTimestamp", currentTime.toString(), MESSAGE_LIMIT_HOURS);
+
+    //end lines////////////
+
     const data = new FormData(form)
 
     // user's chatstripe
@@ -97,16 +107,6 @@ if (messageCount >= 2) {
 
     // to clear the textarea input 
     form.reset()
-
-
-
-
-    // increment message count and update cookie
-    const newMessageCount = messageCount + 1;
-    setCookie('messageCount', newMessageCount, 1);
-
-
-
 
     // bot's chatstripe
     const uniqueId = generateUniqueId()
@@ -179,8 +179,26 @@ form.addEventListener('keyup', (e) => {
 
 ////////////////////////////////////////////
 
+function setCookie(name, value, expirationHours) {
+    const date = new Date();
+    date.setTime(date.getTime() + (expirationHours * 60 * 60 * 1000));
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+  }
+  
+  function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + "=")) {
+        return cookie.substring(name.length + 1);
+      }
+    }
+    return null;
+  }
+  
 
-
+///////////////////////////////////////////
 /* COpy response text with buttons*/
 const copyTextToClipboard = (text) => {
     const textArea = document.createElement('textarea');
