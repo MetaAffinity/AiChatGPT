@@ -6,7 +6,6 @@ const chatContainer = document.querySelector('#chat_container')
 
 let loadInterval
 
-
 function loader(element) {
     element.textContent = ''
 
@@ -153,9 +152,6 @@ const handleSubmit = async (e) => {
     }
 }
 
-////////////////////
-
-////////////////
 form.addEventListener('submit', handleSubmit)
 form.addEventListener('keyup', (e) => {
     if (e.keyCode === 13) {
