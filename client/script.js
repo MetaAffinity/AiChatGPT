@@ -96,7 +96,7 @@ const handleSubmit = async (e) => {
 
     //new lines ///////////////
   
-    / Check if message limit has been reached
+    // Check if message limit has been reached
     if (messageCount >= 5) {
       alert('You have reached the message limit for today. Please try again tomorrow.')
       return
