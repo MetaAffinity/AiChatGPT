@@ -81,6 +81,14 @@ function chatStripe(isAi, value, uniqueId) {
 const handleSubmit = async (e) => {
     e.preventDefault()
 
+// check if user has already sent 5 messages
+const messageCount = parseInt(getCookie('messageCount')) || 0;
+if (messageCount >= 2) {
+    alert('You have reached the maximum number of messages allowed.');
+    return;
+}
+
+    
     const data = new FormData(form)
 
     // user's chatstripe
@@ -89,6 +97,16 @@ const handleSubmit = async (e) => {
 
     // to clear the textarea input 
     form.reset()
+
+
+
+
+    // increment message count and update cookie
+    const newMessageCount = messageCount + 1;
+    setCookie('messageCount', newMessageCount, 1);
+
+
+
 
     // bot's chatstripe
     const uniqueId = generateUniqueId()
