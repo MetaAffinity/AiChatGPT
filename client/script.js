@@ -80,7 +80,7 @@ function chatStripe(isAi, value, uniqueId) {
 //const MESSAGE_LIMIT_HOURS = 24;
 // end lines
 
-
+/*   23 feb 2023 >  limit
 // Get the current message count from the cookie, or initialize it to 0 if it doesn't exist
 let messageCount = parseInt(localStorage.getItem('messageCount')) || 0;
 
@@ -117,14 +117,14 @@ function resetMessageCount() {
 
 // Call the reset function after 24 hours
 setInterval(resetMessageCount, 24 * 60 * 60 * 1000);
-
+*/
 
 const handleSubmit = async (e) => {
     e.preventDefault()
 
 
     //new lines ///////////////
-    updateMessageCount();
+    //updateMessageCount();   //23feb limit
 
     //end lines////////////
 
