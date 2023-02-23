@@ -87,17 +87,13 @@ let messageCount = parseInt(localStorage.getItem('messageCount')) || 0;
 // Disable the form if the user has exceeded the message limit
 function checkMessageLimit() {
   if (messageCount >= 3) {
-    //form.querySelector('submit[type="button"]').disabled = true;
+    form.querySelector('submit[type="button"]').disabled = true;
     document.getElementById("note-textarea").disabled = true;
     const errorDiv = document.querySelector('.message-limit-exceeded');
         errorDiv.style.display = 'block';
-        //return;
+        return;
 
-        var errorMessage = document.createElement("div");
-errorMessage.classList.add("error");
-errorMessage.textContent = "You have reached the message limit. Please wait before sending more messages.";
 
-document.getElementById("note-textarea").appendChild(errorMessage);
 
   }
 }
