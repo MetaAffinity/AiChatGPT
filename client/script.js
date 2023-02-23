@@ -76,26 +76,47 @@ function chatStripe(isAi, value, uniqueId) {
 }
 
 //start new lines
-const MAX_MESSAGES = 3;
-const MESSAGE_LIMIT_HOURS = 24;
+//const MAX_MESSAGES = 3;
+//const MESSAGE_LIMIT_HOURS = 24;
 // end lines
+
+
+// Get the current message count from the cookie, or initialize it to 0 if it doesn't exist
+let messageCount = parseInt(localStorage.getItem('messageCount')) || 0;
+
+// Disable the form if the user has exceeded the message limit
+function checkMessageLimit() {
+  if (messageCount >= 5) {
+    form.querySelector('input[type="text"]').disabled = true;
+    document.querySelector('#message-limit-exceeded').classList.remove('hidden');
+  }
+}
+
+// Update the message count in the cookie and check the message limit
+function updateMessageCount() {
+  messageCount++;
+  localStorage.setItem('messageCount', messageCount);
+  checkMessageLimit();
+}
+
+// Reset the message count after 24 hours
+function resetMessageCount() {
+  messageCount = 0;
+  localStorage.setItem('messageCount', messageCount);
+  form.querySelector('input[type="text"]').disabled = false;
+  document.querySelector('#message-limit-exceeded').classList.add('hidden');
+}
+
+// Call the reset function after 24 hours
+setInterval(resetMessageCount, 24 * 60 * 60 * 1000);
+
+
 const handleSubmit = async (e) => {
     e.preventDefault()
 
 
     //new lines ///////////////
-  // Check if message limit is exceeded
-  const messageCount = parseInt(getCookie("messageCount") || "0");
-  const lastMessageTimestamp = parseInt(getCookie("lastMessageTimestamp") || "0");
-  const currentTime = Date.now();
-  if (messageCount >= MAX_MESSAGES && (currentTime - lastMessageTimestamp) < MESSAGE_LIMIT_HOURS * 60 * 60 * 1000) {
-    alert("You have reached the message limit. Please try again later.");
-    return;
-  }
-
-  // Increment message count and update last message timestamp in cookies
-  setCookie("messageCount", (messageCount + 1).toString(), MESSAGE_LIMIT_HOURS);
-  setCookie("lastMessageTimestamp", currentTime.toString(), MESSAGE_LIMIT_HOURS);
+    updateMessageCount();
 
     //end lines////////////
 
