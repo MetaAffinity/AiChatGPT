@@ -115,7 +115,7 @@ function updateMessageCount() {
 function resetMessageCount() {
   messageCount = 0;
   localStorage.setItem('messageCount', messageCount);
-  form.querySelector('input[type="text"]').disabled = false;
+  form.querySelector('textarea').disabled = false;
   document.querySelector('#message-limit-exceeded').classList.add('hidden');
 }
 
