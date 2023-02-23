@@ -87,8 +87,7 @@ let messageCount = parseInt(localStorage.getItem('messageCount')) || 0;
 // Disable the form if the user has exceeded the message limit
 function checkMessageLimit() {
   if (messageCount >= 3) {
-    form.querySelector('input[type="text"]').disabled = true;
-    document.querySelector('#message-limit-exceeded').classList.remove('hidden');
+    //form.querySelector('input[type="text"]').disabled = true;
     const errorDiv = document.querySelector('.message-limit-exceeded');
         errorDiv.style.display = 'block';
         return;
