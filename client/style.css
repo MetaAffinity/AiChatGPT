@@ -270,3 +270,10 @@ a:hover{
   color: #ccc;
   cursor: not-allowed;
 }
+
+
+.error-message{
+  color:rgb(7, 170, 159);
+  font-weight: bold;
+}
+
