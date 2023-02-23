@@ -104,6 +104,14 @@ const handleSubmit = async (e) => {
 
     const data = new FormData(form)
 
+//new line
+// Increment the message count and update the last message timestamp
+localStorage.setItem(MESSAGE_COUNT_KEY, messageCount + 1);
+localStorage.setItem(LAST_MESSAGE_TIMESTAMP_KEY, currentTimeStamp);
+// new line end
+
+
+
     // user's chatstripe
     chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
 
