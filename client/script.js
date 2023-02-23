@@ -91,14 +91,17 @@ function checkMessageLimit() {
     document.getElementById("note-textarea").disabled = true;
     const errorDiv = document.querySelector('.message-limit-exceeded');
         errorDiv.style.display = 'block';
-        return;
-  }
-}
-var errorMessage = document.createElement("div");
+        //return;
+
+        var errorMessage = document.createElement("div");
 errorMessage.classList.add("error");
 errorMessage.textContent = "You have reached the message limit. Please wait before sending more messages.";
 
 document.getElementById("note-textarea").appendChild(errorMessage);
+
+  }
+}
+
 
 
 // Update the message count in the cookie and check the message limit
