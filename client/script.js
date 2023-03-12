@@ -79,16 +79,19 @@ function chatStripe(isAi, value, uniqueId) {
     `
     )
 }
+
 //23 feb
+// new line
 const MAX_MESSAGES_PER_DAY = 5;
 const MESSAGE_COUNT_KEY = 'messageCount';
 const LAST_MESSAGE_TIMESTAMP_KEY = 'lastMessageTimestamp';
+// end new line
 
 const handleSubmit = async (e) => {
     e.preventDefault(); //; remove if not the above code 23feb
 
 
-    //new lines ///////////////
+    //new lines 23 feb ///////////////
   
   // Check if the user has already exceeded the message limit
   const messageCount = Number(localStorage.getItem(MESSAGE_COUNT_KEY)) || 0;
@@ -104,7 +107,7 @@ const handleSubmit = async (e) => {
 
     const data = new FormData(form)
 
-//new line
+//new line 23feb
 // Increment the message count and update the last message timestamp
 localStorage.setItem(MESSAGE_COUNT_KEY, messageCount + 1);
 localStorage.setItem(LAST_MESSAGE_TIMESTAMP_KEY, currentTimeStamp);
